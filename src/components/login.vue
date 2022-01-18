@@ -71,7 +71,7 @@ export default {
         // 如果valid参数为true则验证通过
         if (!valid) { return }
         // 发送请求进行登录
-        const { data: res } = await this.$http.post('http://120.78.12.66:8889/api/private/v1/login', this.loginForm)
+        const { data: res } = await this.$http.post('login', this.loginForm)
         if (res.meta.status !== 200) {
           return this.$message.error('登录失败:' + res.meta.msg)
         }
