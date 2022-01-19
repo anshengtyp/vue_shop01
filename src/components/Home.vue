@@ -142,8 +142,9 @@ export default {
 }
 .toggle-button{
   background-color: #4a5064;
+  text-align: center;
   color: white;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 24px;
   cursor: pointer;
   // 竖线之间的空隙
