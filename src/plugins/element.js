@@ -3,7 +3,7 @@ import Vue from 'vue'
 import {
   Button, Form, FormItem, Input, Message, Container, Header, Aside, Main, Menu, Submenu, MenuItem,
   Breadcrumb, BreadcrumbItem, Card, Row, Col, Table, TableColumn, Switch, Tooltip, Pagination,
-  Dialog, MessageBox, Tag, Tree, Select, Option, Cascader
+  Dialog, MessageBox, Tag, Tree, Select, Option, Cascader, Alert, Tabs, TabPane
 } from 'element-ui'
 
 // 进行全局注册
@@ -34,6 +34,9 @@ Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Cascader)
+Vue.use(Alert)
+Vue.use(Tabs)
+Vue.use(TabPane)
 
 // 将消息组件绑定在vue原型对象上，直接可以this.$message来使用Message
 Vue.prototype.$message = Message
