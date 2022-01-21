@@ -9,6 +9,7 @@ import Roles from '../components/power/roles.vue'
 import GoodsClass from '../components/goods/goodsClass.vue'
 import ClassParameter from '../components/goods/ClassParameter.vue'
 import GoodsList from '../components/goods/GoodsList.vue'
+import Add from '../components/goods/add.vue'
 
 Vue.use(VueRouter)
 
@@ -28,7 +29,8 @@ const routes = [
       { path: '/roles', component: Roles },
       { path: '/categories', component: GoodsClass },
       { path: '/params', component: ClassParameter },
-      { path: '/goods', component: GoodsList }
+      { path: '/goods', component: GoodsList },
+      { path: '/goods/add', component: Add }
     ]
   }
 ]
