@@ -4,7 +4,7 @@ import {
   Button, Form, FormItem, Input, Message, Container, Header, Aside, Main, Menu, Submenu, MenuItem,
   Breadcrumb, BreadcrumbItem, Card, Row, Col, Table, TableColumn, Switch, Tooltip, Pagination,
   Dialog, MessageBox, Tag, Tree, Select, Option, Cascader, Alert, Tabs, TabPane,
-  Step, Steps, Checkbox, CheckboxGroup, Upload
+  Step, Steps, Checkbox, CheckboxGroup, Upload, Timeline, TimelineItem
 } from 'element-ui'
 
 // 进行全局注册
@@ -43,6 +43,8 @@ Vue.use(TabPane)
 Vue.use(Step)
 Vue.use(Steps)
 Vue.use(Upload)
+Vue.use(Timeline)
+Vue.use(TimelineItem)
 
 // 将消息组件绑定在vue原型对象上，直接可以this.$message来使用Message
 Vue.prototype.$message = Message

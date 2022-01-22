@@ -40,7 +40,7 @@
         <el-table-column  label="操作" width="130px">
           <!-- 创建作用域插槽，来接收本行的数据 -->
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit"></el-button>
+            <el-button @click= "showEditGoods(scope.row.goods_id)" type="primary" size="mini" icon="el-icon-edit"></el-button>
             <el-button @click="DelGoods(scope.row.goods_id)" type="danger" size="mini" icon="el-icon-delete"></el-button>
           </template>
         </el-table-column>
@@ -55,6 +55,31 @@
       :page-size= "queryInfo.pagesize" layout="total, sizes, prev, pager, next, jumper"
       :total= "total"></el-pagination>
     </el-card>
+    <!-- 修改对话框 -->
+    <el-dialog title="修改商品" :visible.sync="EditDialogVisible" width="50%">
+     <!-- 表单区域 -->
+    <el-form :model= "editData" :rules= "EditRules" ref="EditRormRef" label-width="100px">
+     <el-form-item label="商品名称" prop="goods_name">
+      <el-input v-model="editData.goods_name"></el-input>
+      </el-form-item>
+      <el-form-item label="商品价格" prop="goods_price">
+      <el-input v-model="editData.goods_price"></el-input>
+      </el-form-item>
+      <el-form-item label="商品数量" prop="goods_number">
+      <el-input v-model="editData.goods_number"></el-input>
+      </el-form-item>
+        <el-form-item label="商品重量" prop="goods_weight">
+      <el-input v-model="editData.goods_weight"></el-input>
+      </el-form-item>
+      <el-form-item label="商品介绍" prop="goods_introduce">
+      <el-input v-model="editData.goods_introduce"></el-input>
+      </el-form-item>
+    </el-form>
+     <span slot="footer" class="dialog-footer">
+    <el-button @click="EditDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click= "editGoods">确 定</el-button>
+    </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -62,6 +87,15 @@
 export default {
   data() {
     return {
+      // 验证修改表单的规则
+      EditRules: {
+        goods_name: [{ required: true, message: '请输入商品名称', trigger: 'blur' }],
+        goods_price: [{ required: true, message: '请输入商品价格', trigger: 'blur' }],
+        goods_number: [{ required: true, message: '请输入商品数量', trigger: 'blur' }],
+        goods_weight: [{ required: true, message: '请输入商品重量', trigger: 'blur' }]
+      },
+      EditDialogVisible: false,
+      editData: {},
       // 查询参数对象,query为搜索关键字，pagesize为一页显示多少条数据
       queryInfo: {
         query: '',
@@ -84,11 +118,9 @@ export default {
     async getGoodsList() {
       // 发送请求,服务器返回一个premise对象，通过async/awawit简化异步操作
       const { data: res } = await this.$http.get('goods/', { params: this.queryInfo })
-      console.log(res)
       if (res.meta.status !== 200) {
         return this.$message.error('获取商品列表失败')
       }
-      this.$message.success('获取商品列表成功')
       // 将请求到的数据赋值给定义的数据
       this.goodsList = res.data.goods
       this.total = res.data.total
@@ -128,6 +160,34 @@ export default {
     goAddGoods() {
       // 调用该方法实现路径跳转$router.push,参数为要跳转到的页面
       this.$router.push('/goods/add')
+    },
+    // 显示修改对话框
+    async showEditGoods(id) {
+      // 发送请求实现点击对应的商品拿到对应的数据
+      const { data: res } = await this.$http.get('goods/' + id)
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取商品信息失败')
+      }
+      this.editData = res.data
+      this.EditDialogVisible = true
+      console.log(this.editData)
+    },
+    // 实现修改操作
+    editGoods() {
+      // 对表单进行预校验
+      this.$refs.EditRormRef.validate(async valid => {
+        if (!valid) return
+        // 发送请求修改数据
+        const { data: res } = await this.$http.put('goods/' + this.editData.goods_id,
+          { goods_name: this.editData.goods_name, goods_price: this.editData.goods_price, goods_number: this.editData.goods_number, goods_weight: this.editData.goods_weight, goods_cat: this.editData.goods_cat })
+        console.log(res)
+        if (res.meta.status !== 200) {
+          return this.$message.error('修改商品失败')
+        }
+        this.$message.success('修改商品成功')
+        this.getGoodsList()
+        this.EditDialogVisible = false
+      })
     }
   }
 }
