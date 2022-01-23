@@ -12,6 +12,9 @@ import axios from 'axios'
 import TreeTable from 'vue-table-with-tree-grid'
 // 导入富文本编辑器
 import VueQuillEditor from 'vue-quill-editor'
+// nprogress包对应的js和css文件
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 // 导入富文本编辑器的样式
 import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
@@ -22,14 +25,19 @@ Vue.use(VueQuillEditor)
 
 // 设置请求的根路径
 axios.defaults.baseURL = 'http://120.78.12.66:8889/api/private/v1/'
-
 // 设置请求拦截器，实现在请求头中添加token信息,有权限的进行后续的请求
 axios.interceptors.request.use(config => {
+  // 在request拦截器中展示进度条
+  NProgress.start()
   // 为请求头添加token信息
   config.headers.Authorization = window.sessionStorage.getItem('token')
   return config
 })
-
+// 在response拦截器中隐藏进度条
+axios.interceptors.response.use(config => {
+  NProgress.done()
+  return config
+})
 // 将axios请求对象挂载到vue的原型对象上通过this.$http的方式来使用
 Vue.prototype.$http = axios
 
