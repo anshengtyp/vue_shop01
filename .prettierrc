@@ -1,6 +1,5 @@
 {
-    "semi":'false',    ;// 使用分号, 默认true
-    "singleQuote":'true',   ;// 使用单引号, 默认false(在jsx中配置无效, 默认都是双引号)
-    "Bracket Spacing":'true',  ;//在对象文字中的括号之间打印空格。
-    "printWidth": '200'   ;//允许一行最多有多少个字符，超过就进行换行
+    "semi":false,     
+    "singleQuote":true,   
+    "Bracket Spacing":true
 }
