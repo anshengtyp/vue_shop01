@@ -19,7 +19,7 @@ import NProgress from 'nprogress'
 Vue.use(VueQuillEditor)
 
 // 设置请求的根路径
-axios.defaults.baseURL = 'http://120.78.12.66:8889/api/private/v1/'
+axios.defaults.baseURL = ' https://lianghj.top:8888/api/private/v1/'
 // 设置请求拦截器，实现在请求头中添加token信息,有权限的进行后续的请求
 axios.interceptors.request.use(config => {
   // 在request拦截器中展示进度条

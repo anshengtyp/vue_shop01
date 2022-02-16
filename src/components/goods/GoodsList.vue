@@ -21,7 +21,7 @@
         </el-col>
         <!-- 添加商品按钮区域 -->
         <el-col :span="4">
-          <el-button type="primary" @click="goAddGoods">添加商品</el-button>
+          <el-button type="primary" @click= "goAddGoods">添加商品</el-button>
         </el-col>
       </el-row>
       <!-- 表格区域 -->
@@ -76,7 +76,7 @@
       </el-form-item>
     </el-form>
      <span slot="footer" class="dialog-footer">
-    <el-button @click="EditDialogVisible = false">取 消</el-button>
+    <el-button @click= "EditDialogVisible = false">取 消</el-button>
     <el-button type="primary" @click= "editGoods">确 定</el-button>
     </span>
     </el-dialog>

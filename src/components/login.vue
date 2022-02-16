@@ -66,7 +66,7 @@ export default {
       this.$refs.LoginFormRef.resetFields()
     },
     login () {
-      // 点击登录的时候先调用validate方法验证表单内容是否有误
+      // 点击登录的时候先调用validate方法验证表单内容是否有误,valid返回一个布尔值，如果为true就表明表单输入的内容没有错误
       this.$refs.LoginFormRef.validate(async valid => {
         // 如果valid参数为true则验证通过
         if (!valid) { return }
@@ -76,9 +76,9 @@ export default {
           return this.$message.error('登录失败:' + res.meta.msg)
         }
         this.$message.success('登录成功')
-        // 保存token，用来发送请求进行验证
+        // 保存token，用来后续发送请求进行验证
         window.sessionStorage.setItem('token', res.data.token)
-        // 编程式导航至/home
+        // 编程式导航跳转到/home
         this.$router.push('/home')
       })
     }

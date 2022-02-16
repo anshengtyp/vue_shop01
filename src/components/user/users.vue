@@ -17,15 +17,9 @@
               <!--clear绑定清理数据函数 v-model="queryInfo.query"为输入框绑定data的数据关键字，clearable清空文本框 -->
             <el-input @clear="getUserList" clearable placeholder="请输入内容" v-model="queryInfo.query">
                 <!-- 点击搜索按钮，绑定点击事件，调用用户显示列表函数 -->
-              <el-button @click="getUserList"
-                slot="append"
-                icon="el-icon-search"
-              ></el-button></el-input
-          ></el-col>
+              <el-button @click="getUserList" slot="append" icon="el-icon-search"></el-button></el-input></el-col>
           <!-- @click='addDialogVisible = true' 为添加按钮绑定打开对话框事件 -->
-          <el-col :span="4"
-            ><el-button type="primary" @click='addDialogVisible = true'>添加用户</el-button></el-col
-          >
+          <el-col :span="4"><el-button type="primary" @click= 'addDialogVisible = true'>添加用户</el-button></el-col>
         </el-row>
         <!-- 用户列表区域,:data = 'userList'指定表格数据源 -->
         <el-table border stripe :data = 'userList'>
@@ -39,7 +33,7 @@
                 <!--使用作用域插槽拿到本行的数据 scope为本行的数据 -->
                  <template slot-scope = "scope">
                      <!-- 开关组件，绑定v-model到一个Boolean类型的变量。change监听开关的改变事件，可以使用active-color属性与inactive-color属性来设置开关的背景色。 -->
-                     <el-switch v-model="scope.row.mg_state" @change="userStatusChange(scope.row)"></el-switch>
+                     <el-switch v-model="scope.row.mg_state" @change= "userStatusChange(scope.row)"></el-switch>
                  </template>
             </el-table-column>
             <el-table-column label = "操作" width="170px">
@@ -70,13 +64,12 @@
       :page-sizes="[1, 2, 5, 10]"
       :page-size="queryInfo.pagesize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="total">
+      :total= "total">
     </el-pagination>
     </el-card>
   <!-- 添加用户对话框 -->
   <!-- @close='addClose'绑定关闭事件  -->
-  <el-dialog @close='addClose' title="添加用户" :visible.sync="addDialogVisible"
-    width="50%">
+  <el-dialog @close='addClose' title="添加用户" :visible.sync="addDialogVisible" width="50%">
     <!-- 内容主题区域 -->
     <!-- 添加用户表单区域 prop="username"验证规则的属性 -->
     <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
@@ -129,16 +122,16 @@
     <p>当前的角色:{{rowInfo.role_name}}</p>
     <p>分配新角色:
       <!-- 下拉菜单 -->
-    <el-select v-model="selectValue" placeholder="请选择">
-    <el-option v-for="item in RolesList" :key="item.id" :label="item.roleName"
+    <el-select v-model= "selectValue" placeholder="请选择">
+    <el-option v-for= "item in RolesList" :key= "item.id" :label= "item.roleName"
       :value="item.id">
     </el-option>
   </el-select>
     </p>
   </div>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="setRolesdialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="addRoles">确 定</el-button>
+    <el-button @click= "setRolesdialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click= "addRoles">确 定</el-button>
   </span>
 </el-dialog>
   </div>
@@ -217,6 +210,7 @@ export default {
       }
     }
   },
+  // 初始化数据，页面一加载就拿到用户数据
   created() {
     this.getUserList()
   },
@@ -248,7 +242,7 @@ export default {
       if (res.meta.status !== 200) {
         // 如果更新失败让状态变回原来的值,不让其修改
         userinfo.mg_state = !userinfo.mg_state
-        return this.$$message.error('更新用户状态失败')
+        return this.$message.error('更新用户状态失败')
       }
       this.$message.success('更新用户状态成功')
     },
@@ -298,8 +292,7 @@ export default {
       this.$refs.editFormRef.validate(async valid => {
         if (!valid) return this.$message.error('请填写完整用户信息')
         // 发送请求完成修改用户的操作
-        const { data: res } = await this.$http.put(
-          'users/' + this.editForm.id, { email: this.editForm.email, mobile: this.editForm.mobile })
+        const { data: res } = await this.$http.put('users/' + this.editForm.id, { email: this.editForm.email, mobile: this.editForm.mobile })
         // 判断如果修改失败，就做提示
         if (res.meta.status !== 200) return this.$message.error('修改用户失败')
         // 修改成功的提示
